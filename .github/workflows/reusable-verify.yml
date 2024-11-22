@@ -22,12 +22,6 @@ on:
       SSH_KEY_PEM:
         required: true
         description: SSH private key (PEM format)
-      SSH_KEY_PKCS8:
-        required: true
-        description: SSH private key (PKCS8 format)
-      SSH_KEY_RFC4716:
-        required: true
-        description: SSH private key (RFC4716 format)
 
 jobs:
   ssh-pem:
@@ -44,42 +38,6 @@ jobs:
       uses: ./.
       with:
         key: ${{ secrets.SSH_KEY_PEM }}
-        known_hosts: unnecessary
-    - name: git clone through SSH
-      run: git clone git@github.com:step-security/ssh-key-action.git tmp
-
-  ssh-pkcs8:
-    name: Connect to github.com (PKCS8 format)
-    runs-on: ${{ inputs.os }}
-    container: ${{ inputs.docker_image }}
-    steps:
-    - name: Install packages
-      run: ${{ inputs.package_installation_command }}
-      if: ${{ inputs.package_installation_command != '' }}
-    - name: Checkout source codes
-      uses: actions/checkout@v3
-    - name: Install SSH key
-      uses: ./.
-      with:
-        key: ${{ secrets.SSH_KEY_PKCS8 }}
-        known_hosts: unnecessary
-    - name: git clone through SSH
-      run: git clone git@github.com:step-security/ssh-key-action.git tmp
-
-  ssh-rfc4716:
-    name: Connect to github.com (RFC4716 format)
-    runs-on: ${{ inputs.os }}
-    container: ${{ inputs.docker_image }}
-    steps:
-    - name: Install packages
-      run: ${{ inputs.package_installation_command }}
-      if: ${{ inputs.package_installation_command != '' }}
-    - name: Checkout source codes
-      uses: actions/checkout@v3
-    - name: Install SSH key
-      uses: ./.
-      with:
-        key: ${{ secrets.SSH_KEY_RFC4716 }}
         known_hosts: unnecessary
     - name: git clone through SSH
       run: git clone git@github.com:step-security/ssh-key-action.git tmp

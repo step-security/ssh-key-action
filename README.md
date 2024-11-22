@@ -154,7 +154,6 @@ It is `known_hosts: unnecessary`.
 
 The scripts and documentation in this project are released under the [MIT License](LICENSE)
 
-
 [image-build]: https://github.com/step-security/ssh-key-action/workflows/Build/badge.svg?event=push&branch=v2
 [link-build]: https://github.com/step-security/ssh-key-action/actions/workflows/build.yml
 [image-verify-windows]: https://github.com/step-security/ssh-key-action/workflows/Windows/badge.svg?event=push&branch=v2
