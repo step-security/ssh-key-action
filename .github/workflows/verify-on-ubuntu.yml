@@ -1,0 +1,19 @@
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+name: Ubuntu
+
+on:
+- push
+
+jobs:
+  verify:
+    name: Verify
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-20.04
+        - ubuntu-22.04
+    uses: "./.github/workflows/reusable-verify.yml"
+    with:
+      os: ${{ matrix.os }}
+    secrets: inherit

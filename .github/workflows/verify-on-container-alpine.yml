@@ -1,0 +1,26 @@
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+name: Docker container (Alpine Linux)
+
+on:
+- push
+
+jobs:
+  verify:
+    name: Verify
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-20.04
+        - ubuntu-22.04
+        docker_image:
+        - alpine:3.10
+        - alpine:3.11
+        - alpine:3.12
+        - alpine:3.13
+    uses: "./.github/workflows/reusable-verify.yml"
+    with:
+      os: ${{ matrix.os }}
+      docker_image: ${{ matrix.docker_image }}
+      package_installation_command: apk add openssh-client git
+    secrets: inherit
