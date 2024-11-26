@@ -1,0 +1,18 @@
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+name: macOS
+
+on:
+- push
+
+jobs:
+  verify:
+    name: Verify
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - macos-12
+    uses: "./.github/workflows/reusable-verify.yml"
+    with:
+      os: ${{ matrix.os }}
+    secrets: inherit
