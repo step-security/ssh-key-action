@@ -1,0 +1,37 @@
+name: Dependency Audit Fix Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      package_manager:
+        required: false
+        default: "npm"
+      force:
+        description: "Use --force flag for npm audit fix?"
+        required: false
+        type: boolean
+      base_branch:
+        required: false
+        default: "main"
+      use_private_packages:
+        description: "Use private packages (default: false)"
+        required: false
+        type: boolean
+      script:
+        required: false
+        default: "npm run test"
+
+permissions:
+  contents: write
+  pull-requests: write
+  packages: read
+
+jobs:
+  audit-fix:
+    uses: step-security/reusable-workflows/.github/workflows/audit_fix.yml@v1
+    with:
+      package_manager: ${{ inputs.package_manager }}
+      force: ${{ inputs.force }}
+      base_branch: ${{ inputs.base_branch }}
+      use_private_packages: ${{ inputs.use_private_packages }}
+      script: ${{ inputs.script }}
