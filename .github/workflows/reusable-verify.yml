@@ -38,7 +38,7 @@ jobs:
       run: ${{ inputs.package_installation_command }}
       if: ${{ inputs.package_installation_command != '' }}
     - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Install SSH key
       uses: ./.
       with:
@@ -61,7 +61,7 @@ jobs:
       run: ${{ inputs.package_installation_command }}
       if: ${{ inputs.package_installation_command != '' }}
     - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Install SSH key (dummy)
       uses: ./.
       with:
@@ -90,7 +90,7 @@ jobs:
       run: ${{ inputs.package_installation_command }}
       if: ${{ inputs.package_installation_command != '' }}
     - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Install SSH key
       uses: ./.
       with:
@@ -114,7 +114,7 @@ jobs:
       run: ${{ inputs.package_installation_command }}
       if: ${{ inputs.package_installation_command != '' }}
     - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Install SSH key
       uses: ./.
       with:
@@ -143,7 +143,7 @@ jobs:
       run: ${{ inputs.package_installation_command }}
       if: ${{ inputs.package_installation_command != '' }}
     - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Install SSH key
       uses: ./.
       with:
@@ -167,7 +167,7 @@ jobs:
       run: ${{ inputs.package_installation_command }}
       if: ${{ inputs.package_installation_command != '' }}
     - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Install SSH key
       uses: ./.
       with:
@@ -197,7 +197,7 @@ jobs:
       run: ${{ inputs.package_installation_command }}
       if: ${{ inputs.package_installation_command != '' }}
     - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Install SSH key
       uses: ./.
       with:
