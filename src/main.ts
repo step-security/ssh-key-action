@@ -42,14 +42,14 @@ async function validateSubscription(): Promise<void> {
     try {
         await axios.get(API_URL, {timeout: 3000});
     } catch (error) {
-        if (isAxiosError(error) && error.response !== null) {
+        if (isAxiosError(error) && error.response?.status === 403) {
             core.error(
                 'Subscription is not valid. Reach out to support@stepsecurity.io'
             );
             // eslint-disable-next-line no-process-exit
             process.exit(1);
         } else {
-            core.info('Timeout or API not reachable. Continuing to next step.');
+        core.info('Timeout or API not reachable. Continuing to next step.');
         }
     }
 }
