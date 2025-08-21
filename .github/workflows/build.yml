@@ -12,10 +12,8 @@ jobs:
     strategy:
       matrix:
         os:
-        - windows-2019
         - windows-2022
-        - macos-12
-        - ubuntu-20.04
+        - macos-14
         - ubuntu-22.04
         nodejs:
         - 20
