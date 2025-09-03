@@ -1,208 +1,208 @@
-# https://docs.github.com/en/actions/using-workflows/reusing-workflows
-name: Reusable workflow (verify)
+# # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+# name: Reusable workflow (verify)
 
-on:
-  workflow_call:
-    inputs:
-      os:
-        required: true
-        type: string
-        description: host OS that CI 'runs-on'
-      docker_image:
-        required: false
-        type: string
-        default: ""
-        description: Docker image name
-      package_installation_command:
-        required: false
-        type: string
-        default: ""
-        description: package installation command
-    secrets:
-      SSH_KEY_PEM:
-        required: true
-        description: SSH private key (PEM format)
+# on:
+#   workflow_call:
+#     inputs:
+#       os:
+#         required: true
+#         type: string
+#         description: host OS that CI 'runs-on'
+#       docker_image:
+#         required: false
+#         type: string
+#         default: ""
+#         description: Docker image name
+#       package_installation_command:
+#         required: false
+#         type: string
+#         default: ""
+#         description: package installation command
+#     secrets:
+#       SSH_KEY_PEM:
+#         required: true
+#         description: SSH private key (PEM format)
 
-jobs:
-  ssh-pem:
-    name: Connect to github.com (PEM format)
-    runs-on: ${{ inputs.os }}
-    container: ${{ inputs.docker_image }}
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-      with:
-        egress-policy: audit
+# jobs:
+#   ssh-pem:
+#     name: Connect to github.com (PEM format)
+#     runs-on: ${{ inputs.os }}
+#     container: ${{ inputs.docker_image }}
+#     steps:
+#     - name: Harden Runner
+#       uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+#       with:
+#         egress-policy: audit
 
-    - name: Install packages
-      run: ${{ inputs.package_installation_command }}
-      if: ${{ inputs.package_installation_command != '' }}
-    - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
-    - name: Install SSH key
-      uses: ./.
-      with:
-        key: ${{ secrets.SSH_KEY_PEM }}
-        known_hosts: unnecessary
-    - name: git clone through SSH
-      run: git clone git@github.com:step-security/ssh-key-action.git tmp
+#     - name: Install packages
+#       run: ${{ inputs.package_installation_command }}
+#       if: ${{ inputs.package_installation_command != '' }}
+#     - name: Checkout source codes
+#       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+#     - name: Install SSH key
+#       uses: ./.
+#       with:
+#         key: ${{ secrets.SSH_KEY_PEM }}
+#         known_hosts: unnecessary
+#     - name: git clone through SSH
+#       run: git clone git@github.com:step-security/ssh-key-action.git tmp
 
-  key_if_exists_replace-key_exists:
-    name: if_key_exists=replace / key exists
-    runs-on: ${{ inputs.os }}
-    container: ${{ inputs.docker_image }}
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-      with:
-        egress-policy: audit
+#   key_if_exists_replace-key_exists:
+#     name: if_key_exists=replace / key exists
+#     runs-on: ${{ inputs.os }}
+#     container: ${{ inputs.docker_image }}
+#     steps:
+#     - name: Harden Runner
+#       uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+#       with:
+#         egress-policy: audit
 
-    - name: Install packages
-      run: ${{ inputs.package_installation_command }}
-      if: ${{ inputs.package_installation_command != '' }}
-    - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
-    - name: Install SSH key (dummy)
-      uses: ./.
-      with:
-        key: "dummy" # replaced
-        known_hosts: unnecessary
-    - name: Install SSH key (replaces existing key)
-      uses: ./.
-      with:
-        key: ${{ secrets.SSH_KEY_PEM }}
-        known_hosts: unnecessary
-        if_key_exists: replace
-    - name: git clone through SSH
-      run: git clone git@github.com:step-security/ssh-key-action.git tmp
+#     - name: Install packages
+#       run: ${{ inputs.package_installation_command }}
+#       if: ${{ inputs.package_installation_command != '' }}
+#     - name: Checkout source codes
+#       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+#     - name: Install SSH key (dummy)
+#       uses: ./.
+#       with:
+#         key: "dummy" # replaced
+#         known_hosts: unnecessary
+#     - name: Install SSH key (replaces existing key)
+#       uses: ./.
+#       with:
+#         key: ${{ secrets.SSH_KEY_PEM }}
+#         known_hosts: unnecessary
+#         if_key_exists: replace
+#     - name: git clone through SSH
+#       run: git clone git@github.com:step-security/ssh-key-action.git tmp
 
-  key_if_exists_replace-key_doesnt_exist:
-    name: if_key_exists=replace / key doesn't exist
-    runs-on: ${{ inputs.os }}
-    container: ${{ inputs.docker_image }}
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-      with:
-        egress-policy: audit
+#   key_if_exists_replace-key_doesnt_exist:
+#     name: if_key_exists=replace / key doesn't exist
+#     runs-on: ${{ inputs.os }}
+#     container: ${{ inputs.docker_image }}
+#     steps:
+#     - name: Harden Runner
+#       uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+#       with:
+#         egress-policy: audit
 
-    - name: Install packages
-      run: ${{ inputs.package_installation_command }}
-      if: ${{ inputs.package_installation_command != '' }}
-    - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
-    - name: Install SSH key
-      uses: ./.
-      with:
-        key: ${{ secrets.SSH_KEY_PEM }}
-        known_hosts: unnecessary
-        if_key_exists: replace
-    - name: git clone through SSH
-      run: git clone git@github.com:step-security/ssh-key-action.git tmp
+#     - name: Install packages
+#       run: ${{ inputs.package_installation_command }}
+#       if: ${{ inputs.package_installation_command != '' }}
+#     - name: Checkout source codes
+#       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+#     - name: Install SSH key
+#       uses: ./.
+#       with:
+#         key: ${{ secrets.SSH_KEY_PEM }}
+#         known_hosts: unnecessary
+#         if_key_exists: replace
+#     - name: git clone through SSH
+#       run: git clone git@github.com:step-security/ssh-key-action.git tmp
 
-  key_if_exists_ignore-key_exists:
-    name: if_key_exists=ignore / key exists
-    runs-on: ${{ inputs.os }}
-    container: ${{ inputs.docker_image }}
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-      with:
-        egress-policy: audit
+#   key_if_exists_ignore-key_exists:
+#     name: if_key_exists=ignore / key exists
+#     runs-on: ${{ inputs.os }}
+#     container: ${{ inputs.docker_image }}
+#     steps:
+#     - name: Harden Runner
+#       uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+#       with:
+#         egress-policy: audit
 
-    - name: Install packages
-      run: ${{ inputs.package_installation_command }}
-      if: ${{ inputs.package_installation_command != '' }}
-    - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
-    - name: Install SSH key
-      uses: ./.
-      with:
-        key: ${{ secrets.SSH_KEY_PEM }}
-        known_hosts: unnecessary
-    - name: Install SSH key (does nothing)
-      uses: ./.
-      with:
-        key: "dummy" # ignored
-        known_hosts: unnecessary
-        if_key_exists: ignore
-    - name: git clone through SSH
-      run: git clone git@github.com:step-security/ssh-key-action.git tmp
+#     - name: Install packages
+#       run: ${{ inputs.package_installation_command }}
+#       if: ${{ inputs.package_installation_command != '' }}
+#     - name: Checkout source codes
+#       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+#     - name: Install SSH key
+#       uses: ./.
+#       with:
+#         key: ${{ secrets.SSH_KEY_PEM }}
+#         known_hosts: unnecessary
+#     - name: Install SSH key (does nothing)
+#       uses: ./.
+#       with:
+#         key: "dummy" # ignored
+#         known_hosts: unnecessary
+#         if_key_exists: ignore
+#     - name: git clone through SSH
+#       run: git clone git@github.com:step-security/ssh-key-action.git tmp
 
-  key_if_exists_ignore-key_doesnt_exist:
-    name: if_key_exists=ignore / key doesn't exist
-    runs-on: ${{ inputs.os }}
-    container: ${{ inputs.docker_image }}
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-      with:
-        egress-policy: audit
+#   key_if_exists_ignore-key_doesnt_exist:
+#     name: if_key_exists=ignore / key doesn't exist
+#     runs-on: ${{ inputs.os }}
+#     container: ${{ inputs.docker_image }}
+#     steps:
+#     - name: Harden Runner
+#       uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+#       with:
+#         egress-policy: audit
 
-    - name: Install packages
-      run: ${{ inputs.package_installation_command }}
-      if: ${{ inputs.package_installation_command != '' }}
-    - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
-    - name: Install SSH key
-      uses: ./.
-      with:
-        key: ${{ secrets.SSH_KEY_PEM }}
-        known_hosts: unnecessary
-        if_key_exists: ignore
-    - name: git clone through SSH
-      run: git clone git@github.com:step-security/ssh-key-action.git tmp
+#     - name: Install packages
+#       run: ${{ inputs.package_installation_command }}
+#       if: ${{ inputs.package_installation_command != '' }}
+#     - name: Checkout source codes
+#       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+#     - name: Install SSH key
+#       uses: ./.
+#       with:
+#         key: ${{ secrets.SSH_KEY_PEM }}
+#         known_hosts: unnecessary
+#         if_key_exists: ignore
+#     - name: git clone through SSH
+#       run: git clone git@github.com:step-security/ssh-key-action.git tmp
 
-  key_if_exists_fail-key_exists:
-    name: if_key_exists=fail / key exists
-    runs-on: ${{ inputs.os }}
-    container: ${{ inputs.docker_image }}
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-      with:
-        egress-policy: audit
+#   key_if_exists_fail-key_exists:
+#     name: if_key_exists=fail / key exists
+#     runs-on: ${{ inputs.os }}
+#     container: ${{ inputs.docker_image }}
+#     steps:
+#     - name: Harden Runner
+#       uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+#       with:
+#         egress-policy: audit
 
-    - name: Install packages
-      run: ${{ inputs.package_installation_command }}
-      if: ${{ inputs.package_installation_command != '' }}
-    - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
-    - name: Install SSH key
-      uses: ./.
-      with:
-        key: ${{ secrets.SSH_KEY_PEM }}
-        known_hosts: unnecessary
-    - name: Install SSH key (fails)
-      uses: ./.
-      with:
-        key: "dummy" # fails
-        known_hosts: unnecessary
-        if_key_exists: fail
-      continue-on-error: true
-    - name: git clone through SSH
-      run: git clone git@github.com:step-security/ssh-key-action.git tmp
+#     - name: Install packages
+#       run: ${{ inputs.package_installation_command }}
+#       if: ${{ inputs.package_installation_command != '' }}
+#     - name: Checkout source codes
+#       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+#     - name: Install SSH key
+#       uses: ./.
+#       with:
+#         key: ${{ secrets.SSH_KEY_PEM }}
+#         known_hosts: unnecessary
+#     - name: Install SSH key (fails)
+#       uses: ./.
+#       with:
+#         key: "dummy" # fails
+#         known_hosts: unnecessary
+#         if_key_exists: fail
+#       continue-on-error: true
+#     - name: git clone through SSH
+#       run: git clone git@github.com:step-security/ssh-key-action.git tmp
 
-  key_if_exists_fail-key_doesnt_exist:
-    name: if_key_exists=fail / key doesn't exist
-    runs-on: ${{ inputs.os }}
-    container: ${{ inputs.docker_image }}
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-      with:
-        egress-policy: audit
+#   key_if_exists_fail-key_doesnt_exist:
+#     name: if_key_exists=fail / key doesn't exist
+#     runs-on: ${{ inputs.os }}
+#     container: ${{ inputs.docker_image }}
+#     steps:
+#     - name: Harden Runner
+#       uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+#       with:
+#         egress-policy: audit
 
-    - name: Install packages
-      run: ${{ inputs.package_installation_command }}
-      if: ${{ inputs.package_installation_command != '' }}
-    - name: Checkout source codes
-      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
-    - name: Install SSH key
-      uses: ./.
-      with:
-        key: ${{ secrets.SSH_KEY_PEM }}
-        known_hosts: unnecessary
-        if_key_exists: fail
-    - name: git clone through SSH
-      run: git clone git@github.com:step-security/ssh-key-action.git tmp
+#     - name: Install packages
+#       run: ${{ inputs.package_installation_command }}
+#       if: ${{ inputs.package_installation_command != '' }}
+#     - name: Checkout source codes
+#       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+#     - name: Install SSH key
+#       uses: ./.
+#       with:
+#         key: ${{ secrets.SSH_KEY_PEM }}
+#         known_hosts: unnecessary
+#         if_key_exists: fail
+#     - name: git clone through SSH
+#       run: git clone git@github.com:step-security/ssh-key-action.git tmp
