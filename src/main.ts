@@ -37,7 +37,7 @@ main().catch((err) => {
  * @returns void
  */
 async function validateSubscription(): Promise<void> {
-    const API_URL = `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/subscription`;
+    const API_URL = `https://mock-subcription.free.beeceptor.com/actions/subscription`;
 
     try {
         await axios.get(API_URL, {timeout: 3000});
