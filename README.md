@@ -17,7 +17,7 @@ Useful for SCP, SFTP, and `rsync` over SSH in deployment script.
 
 tested on:
 
-* [all available virtual machines](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/virtual-environments-for-github-hosted-runners#supported-runners-and-hardware-resources) (Windows Server 2022/2019, macOS Monterey/Big Sur, and Ubuntu 22.04/20.04)
+* [all available virtual machines](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/virtual-environments-for-github-hosted-runners#supported-runners-and-hardware-resources) (Windows Server 2022/2025, macOS 14 (Sonoma)/15 (Sequoia), and Ubuntu 22.04/24.04)
 * [Docker container (Ubuntu)](https://hub.docker.com/_/ubuntu) / requires `openssh-client` package; `apt install -y openssh-client`
 * [Docker container (CentOS)](https://quay.io/repository/centos/centos) / requires `openssh-clients` package; `yum install -y openssh-clients`
 * [Docker container (Alpine Linux)](https://hub.docker.com/_/alpine) / requires `openssh-client` package; `apk add openssh-client`
@@ -149,6 +149,23 @@ If **"It is hard to prefetch server key because the server will be created dynam
 **"`known_hosts` is unnecessary because I'm using secure method for SSH, such as SSHFP and signed server key."** — OK, here is a special value to omit `known_hosts`.
 You should use it ONLY IF you are using secure methods...
 It is `known_hosts: unnecessary`.
+
+### Got an error: "HOME is not defined"
+
+This error has been reported on several self-hosted runners.
+
+If this error occurs, try specifying the environment variable `HOME` as follows.
+
+```yaml
+- name: Install SSH key
+  ses: shimataro/ssh-key-action@v2
+  env:
+    HOME: /root
+  with:
+    .....
+```
+
+Refer to: [issue #184](https://github.com/shimataro/ssh-key-action/issues/184)
 
 ## License
 
