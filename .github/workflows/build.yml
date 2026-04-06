@@ -13,10 +13,14 @@ jobs:
       matrix:
         os:
         - windows-2022
+        - windows-2025
+        - windows-latest
         - macos-14
+        - macos-15
+        - macos-latest
         - ubuntu-22.04
-        nodejs:
-        - 20
+        - ubuntu-24.04
+        - ubuntu-latest
       fail-fast: false
     steps:
     - name: Harden Runner
@@ -31,7 +35,7 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
       with:
-        node-version: ${{ matrix.nodejs }}
+        node-version-file: package.json
     - name: Cache NPM
       uses: ./.github/actions/cache-npm
     - name: Install dependencies
