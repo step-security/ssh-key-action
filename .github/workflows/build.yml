@@ -16,7 +16,7 @@ jobs:
         - macos-14
         - ubuntu-22.04
         nodejs:
-        - 20
+        - 24
       fail-fast: false
     steps:
     - name: Harden Runner
