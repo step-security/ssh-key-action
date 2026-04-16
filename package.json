@@ -5,7 +5,7 @@
   "description": "Install SSH key in .ssh",
   "main": "./dist/main.js",
   "engines": {
-    "node": ">=8.0.0",
+    "node": ">=24",
     "npm": ">=5.7.0"
   },
   "scripts": {
