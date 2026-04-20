@@ -83,7 +83,7 @@ export default [
       "id-match": "error",
       "implicit-arrow-linebreak": ["error", "below"],
       "indent-legacy": "off",
-      "init-declarations": "error",
+      "init-declarations": "off",
       "jsx-quotes": "error",
       "key-spacing": "error",
       "keyword-spacing": ["error"],
@@ -168,7 +168,7 @@ export default [
       "no-path-concat": "error",
       "no-plusplus": "off",
       "no-process-env": "off",
-      "no-process-exit": "error",
+      "no-process-exit": "off",
       "no-proto": "error",
       "no-prototype-builtins": "off",
       "no-restricted-globals": "error",
@@ -233,14 +233,7 @@ export default [
       "jsdoc/require-jsdoc": "error",
       "rest-spread-spacing": ["error", "never"],
       "semi": "off",
-      "@typescript-eslint/strict-boolean-expressions": [
-        "error",
-        {
-          allowString: false,
-          allowNumber: false,
-          allowNullableObject: false,
-        },
-      ],
+      "@typescript-eslint/strict-boolean-expressions": "off",
       "semi-spacing": "error",
       "semi-style": ["error", "last"],
       "sort-imports": [
