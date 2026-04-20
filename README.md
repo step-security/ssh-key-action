@@ -162,14 +162,12 @@ If this error occurs, try specifying the environment variable `HOME` as follows.
 
 ```yaml
 - name: Install SSH key
-  ses: shimataro/ssh-key-action@v2
+  uses: step-security/ssh-key-action@v2
   env:
     HOME: /root
   with:
     .....
 ```
-
-Refer to: [issue #184](https://github.com/shimataro/ssh-key-action/issues/184)
 
 ## License
 
