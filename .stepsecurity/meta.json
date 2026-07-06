@@ -1,0 +1,18 @@
+{
+   "schema_version": "1",
+   "onboarding_type": "copied",
+   "archived": false,
+   "maintained_action_name": "step-security/ssh-key-action",
+   "upstream_full_repo_name": "shimataro/ssh-key-action",
+   "action_type": "node",
+   "last_release": {
+     "tag_name": "v2.8.1",
+     "created_at": "2026-04-20T15:17:05Z",
+     "published_at": "2026-04-21T00:05:27Z"
+   },
+   "sync": {
+     "ignore_presets": [
+       "defaults_v1"
+     ]
+   }
+ }
